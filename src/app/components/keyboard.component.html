@@ -1,0 +1,132 @@
+<style>
+  :host {
+    height: 100%;
+  }
+</style>
+
+<div id="keyboard" class="flex h-full w-full">
+  <div *ngFor="let range of displayedRanges()" class="flex h-full w-full">
+    <div class="relative flex w-[calc(3*(100%/7))]">
+      <div class="absolute flex h-1/2 w-full justify-center">
+        <button
+          [id]="'c' + range + '_sharp'"
+          [ngClass]="['black-key', 'w-[calc(100%/3)]']"
+          (click)="play('c' + range + '_sharp')">
+          <span *ngIf="withKeys" class="font-poppins leading-10">
+            {{ range === selectedRange ? 'Z' : '' }}
+          </span>
+        </button>
+
+        <button
+          [id]="'d' + range + '_sharp'"
+          [ngClass]="['black-key', 'w-[calc(100%/3)]']"
+          (click)="play('d' + range + '_sharp')">
+          <span *ngIf="withKeys" class="font-poppins leading-10">
+            {{ range === selectedRange ? 'E' : '' }}
+          </span>
+        </button>
+      </div>
+
+      <button [id]="'c' + range" class="white-key" (click)="play('c' + range)">
+        <span *ngIf="withKeys; else defaultC" class="font-poppins leading-10">
+          {{ range === selectedRange ? 'Q' : '' }}
+        </span>
+
+        <ng-template #defaultC>
+          <span class="font-script text-[24px] font-bold">{{ range === selectedRange ? 'do' : '' }}</span>
+        </ng-template>
+      </button>
+
+      <button [id]="'d' + range" class="white-key" (click)="play('d' + range)">
+        <span *ngIf="withKeys; else defaultD" class="font-poppins leading-10">
+          {{ range === selectedRange ? 'S' : '' }}
+        </span>
+
+        <ng-template #defaultD>
+          <span class="font-script text-[24px] font-bold">{{ range === selectedRange ? 're' : '' }}</span>
+        </ng-template>
+      </button>
+
+      <button [id]="'e' + range" class="white-key" (click)="play('e' + range)">
+        <span *ngIf="withKeys; else defaultE" class="font-poppins leading-10">
+          {{ range === selectedRange ? 'D' : '' }}
+        </span>
+
+        <ng-template #defaultE>
+          <span class="font-script text-[24px] font-bold">{{ range === selectedRange ? 'mi' : '' }}</span>
+        </ng-template>
+      </button>
+    </div>
+
+    <div class="relative flex w-[calc(4*(100%/7))]">
+      <div class="absolute flex h-1/2 w-full justify-center">
+        <button
+          [id]="'f' + range + '_sharp'"
+          [ngClass]="['black-key', 'w-[calc(100%/4)]']"
+          (click)="play('f' + range + '_sharp')">
+          <span *ngIf="withKeys" class="font-poppins leading-10">
+            {{ range === selectedRange ? 'T' : '' }}
+          </span>
+        </button>
+
+        <button
+          [id]="'g' + range + '_sharp'"
+          [ngClass]="['black-key', 'w-[calc(100%/4)]']"
+          (click)="play('g' + range + '_sharp')">
+          <span *ngIf="withKeys" class="font-poppins leading-10">
+            {{ range === selectedRange ? 'Y' : '' }}
+          </span>
+        </button>
+
+        <button
+          [id]="'a' + range + '_sharp'"
+          [ngClass]="['black-key', 'w-[calc(100%/4)]']"
+          (click)="play('a' + range + '_sharp')">
+          <span *ngIf="withKeys" class="font-poppins leading-10">
+            {{ range === selectedRange ? 'U' : '' }}
+          </span>
+        </button>
+      </div>
+
+      <button [id]="'f' + range" class="white-key" (click)="play('f' + range)">
+        <span *ngIf="withKeys; else defaultF" class="font-poppins leading-10">
+          {{ range === selectedRange ? 'F' : '' }}
+        </span>
+
+        <ng-template #defaultF>
+          <span class="font-script text-[24px] font-bold">{{ range === selectedRange ? 'fa' : '' }}</span>
+        </ng-template>
+      </button>
+
+      <button [id]="'g' + range" class="white-key" (click)="play('g' + range)">
+        <span *ngIf="withKeys; else defaultG" class="font-poppins leading-10">
+          {{ range === selectedRange ? 'G' : '' }}
+        </span>
+
+        <ng-template #defaultG>
+          <span class="font-script text-[24px] font-bold">{{ range === selectedRange ? 'sol' : '' }}</span>
+        </ng-template>
+      </button>
+
+      <button [id]="'a' + range" class="white-key" (click)="play('a' + range)">
+        <span *ngIf="withKeys; else defaultA" class="font-poppins leading-10">
+          {{ range === selectedRange ? 'H' : '' }}
+        </span>
+
+        <ng-template #defaultA>
+          <span class="font-script text-[24px] font-bold">{{ range === selectedRange ? 'la' : '' }}</span>
+        </ng-template>
+      </button>
+
+      <button [id]="'b' + range" class="white-key" (click)="play('b' + range)">
+        <span *ngIf="withKeys; else defaultB" class="font-poppins leading-10">
+          {{ range === selectedRange ? 'J' : '' }}
+        </span>
+
+        <ng-template #defaultB>
+          <span class="font-script text-[24px] font-bold">{{ range === selectedRange ? 'si' : '' }}</span>
+        </ng-template>
+      </button>
+    </div>
+  </div>
+</div>

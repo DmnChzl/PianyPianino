@@ -1,0 +1,33 @@
+@font-face {
+  font-family: 'League Script';
+  src: url(assets/fonts/LeagueScript-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url(assets/fonts/Poppins-Regular.ttf) format('truetype');
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .black-key {
+    @apply mx-[4px] flex items-end justify-center rounded-b-lg border-b-[16px] border-gray-800 bg-gray-900 text-white outline-none hover:bg-gray-800 focus:border-gray-700 focus:bg-gray-700 sm:border-b-[12px] md:border-b-8;
+  }
+
+  .white-key {
+    @apply mx-[2px] flex w-full items-end justify-center rounded border-b-[16px] border-gray-200 bg-white text-gray-900 outline-none hover:bg-gray-200 focus:border-gray-300 focus:bg-gray-300 sm:border-b-[12px] md:border-b-8;
+  }
+}
+
+@layer utilities {
+  .font-poppins {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .font-script {
+    font-family: 'League Script', cursive;
+  }
+}
