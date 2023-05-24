@@ -12,6 +12,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
 @layer components {
   .black-key {
     @apply mx-[4px] flex items-end justify-center rounded-b-lg border-b-[16px] border-gray-800 bg-gray-900 text-white outline-none hover:bg-gray-800 focus:border-gray-700 focus:bg-gray-700 sm:border-b-[12px] md:border-b-8;

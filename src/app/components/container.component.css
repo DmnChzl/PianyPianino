@@ -3,7 +3,6 @@
   appearance: none;
   background: transparent;
   cursor: pointer;
-  width: 200px;
 }
 
 .slider:focus {
