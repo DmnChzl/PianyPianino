@@ -1,4 +1,4 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 const KEY_MAP: Record<string, (idx: number) => string> = {
   c: (idx: number) => `c${idx}`,
@@ -19,32 +19,44 @@ const KEY_MAP: Record<string, (idx: number) => string> = {
   providedIn: 'root'
 })
 export class AudioService {
-  effects = signal<Record<string, HTMLAudioElement>>({});
+  samples = signal<Record<string, HTMLAudioElement>>({});
 
   constructor() {
     // Initialize all audio tracks
     for (let idx = 2; idx <= 6; idx++) {
       Object.values(KEY_MAP).forEach(getKey => {
         const key = getKey(idx);
+        const audio = new Audio(`assets/samples/${key}.mp3`);
 
-        this.effects.mutate(effects => {
-          effects[key] = new Audio(`assets/effects/${key}.mp3`);
+        this.samples.mutate(samples => {
+          samples[key] = audio;
         });
       });
     }
   }
 
-  playEffect(key: string) {
-    const effect = this.effects()[key];
+  /**
+   * Play asynchronous sample
+   *
+   * @param {string} key 'c2_sharp', 'd3', 'e4', 'f5', 'g6_sharp', etc...
+   */
+  playSample(key: string): Promise<void> {
+    const audioSample = this.samples()[key];
 
     try {
       // Stop previous audio
-      effect.pause();
-      effect.currentTime = 0;
+      audioSample.pause();
+      audioSample.currentTime = 0;
+
       // Play audio (again)
-      effect.play();
+      audioSample.play();
+
+      return new Promise(resolve => {
+        setTimeout(resolve, audioSample.duration * 1000);
+      });
     } catch {
-      console.log('Unable to play effect...');
+      console.log('Unable to play sample...');
+      return Promise.reject(new Error('Unable to play sample...'));
     }
   }
 }

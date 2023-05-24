@@ -1,53 +1,55 @@
-import { Injectable, signal, computed } from '@angular/core';
-
-type Record = {
-  value: string;
-  timestamp: number;
-};
+import { Injectable, Signal, WritableSignal, computed, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecordService {
-  records = signal<Record[]>([]);
+  // prettier-ignore
+  records = signal<{
+    sampleKey: string;
+    timeMillis: number;
+  }[]>([]);
+
   // Consider 'hasRecord' when 'records' not empty
-  hasRecords = computed(() => this.records().length > 0);
-  startTime = signal(0);
-  endTime = signal(0);
+  hasRecords: Signal<boolean> = computed(() => this.records().length > 0);
+
+  // 1st and last timestamps
+  startTime: WritableSignal<undefined | number> = signal(undefined);
+  endTime: WritableSignal<undefined | number> = signal(undefined);
+
   // Consider 'isRecording' when 'startTime' is truthy and 'endTime' is falsy
-  isRecording = computed(() => !!this.startTime() && !this.endTime());
+  isRecording: Signal<boolean> = computed(() => !!this.startTime() && !this.endTime());
 
   /**
    * Cleaning all records and initializing timestamps
    */
   startRecord() {
     this.records.set([]);
+
     this.startTime.set(new Date().getTime());
-    this.endTime.set(0);
+    this.endTime.set(undefined);
   }
 
   /**
    * Add a record with a timestamp
    *
-   * @param {string} value
+   * @param {string} sampleKey 'c2_sharp', 'd3', 'e4', 'f5', 'g6_sharp', etc...
    */
-  addRecord(value: string) {
-    if (this.isRecording()) {
-      this.records.update(records => [
-        ...records,
-        {
-          value,
-          timestamp: new Date().getTime() - this.startTime()
-        }
-      ]);
-    }
+  addRecord(sampleKey: string) {
+    this.records.update(records => [
+      ...records,
+      {
+        sampleKey,
+        timeMillis: new Date().getTime() - (this.startTime() as number)
+      }
+    ]);
   }
 
   /**
    * Timestamps cleaning
    */
   stopRecord() {
-    this.startTime.set(0);
+    this.startTime.set(undefined);
     this.endTime.set(new Date().getTime());
   }
 }

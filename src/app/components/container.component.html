@@ -27,7 +27,7 @@
         <button
           *ngIf="!isRecording() && hasRecords() && !isPlaying()"
           class="h-5 w-5 rounded-full bg-gray-600"
-          (click)="playAllRecords()">
+          (click)="playAllSamples()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -45,7 +45,7 @@
         <button
           *ngIf="!isRecording() && hasRecords() && isPlaying()"
           class="h-5 w-5 rounded-full bg-gray-600"
-          (click)="stopAllRecords()">
+          (click)="stopAllSamples()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -61,9 +61,11 @@
         </button>
       </div>
 
-      <span [ngClass]="['font-poppins', isRecording() ? 'text-white' : 'text-gray-400']">
-        Record {{ isRecording() ? 'On' : 'Off' }}
+      <span *ngIf="!isPlaying()" [ngClass]="['font-poppins', isRecording() ? 'text-white' : 'text-gray-400']">
+        {{ isRecording() ? 'Recording: ' + getRecordingTime() : 'Record Off' }}
       </span>
+
+      <span *ngIf="isPlaying()" class="font-poppins text-white">Playing: {{ getPlayingTime() }} </span>
     </div>
 
     <div class="order-3 col-span-2 mx-auto flex w-full flex-col space-y-2 sm:order-2 sm:w-[256px]">

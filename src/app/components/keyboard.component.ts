@@ -107,14 +107,14 @@ export class BoardComponent implements OnInit, OnChanges {
   }
 
   /**
-   * @param {string} effect 'c2_sharp', 'd3', 'e4', 'f5', 'g6_sharp', etc...
+   * @param {string} key 'c2_sharp', 'd3', 'e4', 'f5', 'g6_sharp', etc...
    */
-  play(effect: string) {
+  play(key: string) {
     if (this.recordService.isRecording()) {
-      this.recordService.addRecord(effect);
+      this.recordService.addRecord(key);
     }
 
-    this.audioService.playEffect(effect);
+    this.audioService.playSample(key);
   }
 
   /**
@@ -127,12 +127,12 @@ export class BoardComponent implements OnInit, OnChanges {
 
     // 'func' maybe 'undefined', if the key isn't mapped...
     if (func) {
-      const effect = func(this.selectedRange);
-      const element = document.getElementById(effect);
+      const sampleKey = func(this.selectedRange);
+      const element = document.getElementById(sampleKey);
 
       // Simulate click by focusing button element
       if (element) element.focus();
-      this.play(effect);
+      this.play(sampleKey);
     }
   }
 }
